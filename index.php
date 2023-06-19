@@ -1,5 +1,10 @@
 <?php include 'inc/header.php'; ?>
 
+<?php
+include 'lib/Database.php';
+$db = new Database();
+?>
+
 <div class="panel-heading">
     <h2>Student Data
 
