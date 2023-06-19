@@ -2,7 +2,7 @@
 
 <?php
 include 'lib/Database.php';
-$db = new Database();
+
 ?>
 
 <div class="panel-heading">
@@ -30,6 +30,17 @@ $db = new Database();
                 <th>Phone</th>
                 <th>Action</th>
             </tr>
+            <?php
+ 
+            $db = new Database();
+
+            $table = "tbl_student";
+            $order_by = array('order_by'=> 'id DESC'); 
+            $data = $db->select($table,$order_by);
+
+
+
+            ?>
             <tr>
                 <td>
                     1
@@ -49,6 +60,7 @@ $db = new Database();
                         onclick="return confirm('Are you sure to delete this Data?')">Delete</a>
                 </td>
             </tr>
+
             <tr>
                 <td colspan="5">
                     <input type="submit" class="btn btn-primary" name="submit" value="Submit">
