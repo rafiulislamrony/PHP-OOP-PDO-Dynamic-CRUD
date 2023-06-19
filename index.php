@@ -40,7 +40,7 @@
                 </td>
                 <td>
                     <a class="btn btn-primary" href="editstudent.php?id=1">Edit</a>
-                    <a class="btn btn-danger" href="deletestudent.php?id=1"
+                    <a class="btn btn-danger" href="lib/process_student.php?action=delete&id=1"
                         onclick="return confirm('Are you sure to delete this Data?')">Delete</a>
                 </td>
             </tr>
