@@ -1,0 +1,41 @@
+.well {
+    background: #F2F2F2;
+    padding: 30px 30px 30px;
+    border: 1px solid #c9c9c9;
+    border-radius: 5px;
+}
+
+
+.panel-heading h2{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;  
+    margin: 0px;
+} 
+
+.panel { 
+    padding: 10px;
+    border: 1px solid #c9c9c9;
+    border-radius: 5px;
+}
+  
+.phed, .panel-heading { 
+    background: #F2F2F2; 
+    padding: 20px;
+    border-radius: 5px; 
+}
+.phed{
+    padding: 10px;
+}
+
+.error{
+    font-size: 16px;
+    font-weight: 700;
+    color: red;
+}
+
+.success{
+    font-size: 16px;
+    font-weight: 700;  
+    color: green;
+}
