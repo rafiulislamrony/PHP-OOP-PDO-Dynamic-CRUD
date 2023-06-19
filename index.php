@@ -14,16 +14,16 @@
 <body>
     <div class="container">
         <div class="well text-center">
-            <h2>Student List</h2>
+            <h2>PHP OOP & PDO Dynamic CRUD</h2>
         </div>
         <br>
 
 
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h2>
-                    <a class="btn btn-success" href="add.php">Add Student</a>
-                    <a class="btn btn-info pull-right" href="attendance_view.php">View All</a>
+                <h2>Student Data
+
+                    <a class="btn btn-success" href="add.php">Add Student Data</a> 
                 </h2>
             </div>
 
@@ -39,27 +39,32 @@
                 <form action="" method="post">
                     <table class="table table-striped">
                         <tr>
-                            <th width="25%">Serial</th>
-                            <th width="25%">Student Name</th>
-                            <th width="25%">Student Roll</th>
-                            <th width="25%">Attendance </th>
+                            <th>Serial</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Action</th>
                         </tr>
                         <tr>
                             <td>
-                                Hi
+                                1
                             </td>
                             <td>
-                                Hi
+                                Rafi
                             </td>
                             <td>
-                                Hi
+                               rafi@gmail.com
                             </td>
                             <td>
-                                Hi
+                                01921756501
+                            </td>
+                            <td>
+                               <a href="editstudent.php?id=1">Edit</a>
+                               <a href="deletestudent.php?id=1" onclick="return confirm('Are you sure to delete this Data?')" >Delete</a>
                             </td>
                         </tr>
                         <tr>
-                            <td colspan="4">
+                            <td colspan="5">
                                 <input type="submit" class="btn btn-primary" name="submit" value="Submit">
                             </td>
                         </tr>
