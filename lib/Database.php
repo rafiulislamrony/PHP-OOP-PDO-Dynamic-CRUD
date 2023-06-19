@@ -21,15 +21,30 @@ class Database
         }
     }
     // Read Data
-    
-    // $sql = $this->pdo->prepare("SELECT * FROM tableName WHERE id=:id AND email=:email LIMIT 1");
+
+    // $sql = $this->pdo->prepare("SELECT * FROM tableName WHERE id=:id AND email=:email LIMIT 5,2");
     // $sql->bindValue(':id', $id);
     // $sql->bindValue(':email', $email);
     // $sql->execute();
 
-    public function select()
+    public function select($table, $data=array())
     {
+        $sql = 'SELECT ';
+        $sql .= array_key_exists("select", $data)?$data['select']:'*';
+        $sql .= ' FROM '.$table;
+       
+        if(array_key_exists("where", $data)){
+            $sql .= ' WHERE ';
+            $i = 0;
+            
+            foreach($data['where'] as $key => $value){
+                $add = ($i>0)?' And ':'';
+                $sql .= "$add"."$key=:$key";
+                $i++;
+            }
 
+
+        }
     }
     // Insert Data
     public function insert()

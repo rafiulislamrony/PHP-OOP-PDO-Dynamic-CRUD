@@ -36,7 +36,12 @@ include 'lib/Database.php';
 
             $table = "tbl_student";
             $order_by = array('order_by'=> 'id DESC'); 
-            $data = $db->select($table,$order_by);
+            // $selectcond = array('select'=> 'name'); 
+            $wherecond = array(
+                'where'=>array('id'=> '2', 'email'=>'afiulislam@gmail.com'),
+                'return_type'=>'single',
+            );
+            $data = $db->select($table, $wherecond);
 
 
 
