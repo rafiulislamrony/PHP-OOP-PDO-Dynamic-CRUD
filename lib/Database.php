@@ -24,8 +24,8 @@ class Database
     // Read Data
     // $sql = "SELECT * FROM tableName WHERE id=:id AND email=:email LIMIT 5";
     // $query = $this->pdo->prepare($sql);
-    // $query->bindValue(':id', $id);
-    // $query->bindValue(':email', $email);
+    // $query->bindParam(':id', $id);
+    // $query->bindParam(':email', $email);
     // $query->execute();
 
     public function select($table, $data = array())
@@ -75,21 +75,48 @@ class Database
                     break;
 
                 default:
-                $value= '';
+                    $value = '';
                     break;
             }
-        }else{
-            if($query->rowCount() > 0){
+        } else {
+            if ($query->rowCount() > 0) {
                 $value = $query->fetchAll();
             }
         }
-        return !empty($value)?$value:false;
+        return !empty($value) ? $value : false;
 
     }
-    // Insert Data
-    public function insert()
-    {
 
+    // Insert Data 
+    // $sql = "INSERT INTO tableName(name, email) VALUES (:name, :email)"; 
+    // $query = $this->pdo->prepare($sql);
+    // $query->bindValue(':name', $name)
+    // $query->bindValue(':email', $email);
+    // $query->execute();
+
+    public function insert($table, $data)
+    {
+        if (!empty($data) && is_array($data)) {
+            $keys = '';
+            $values = '';
+            $i = 0;
+            $keys = implode(',', array_keys($data));
+            $values = ":" . implode(', :', array_keys($data));
+            $sql = "INSERT INTO " . $table . " (" . $keys . ") VALUES ( " . $values . ")";
+            $query = $this->pdo->prepare(($sql));
+
+            foreach ($data as $key => $val) {
+                $query->bindValue(":$key", $val);
+            }
+            $insertdata = $query->execute();
+
+            if ($insertdata) {
+                $lastId = $this->pdo->lastInsertId();
+                return $lastId;
+            } else {
+                return false;
+            }
+        } 
     }
     // Update Data
     public function update()
