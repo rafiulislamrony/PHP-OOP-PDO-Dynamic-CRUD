@@ -94,8 +94,8 @@ class Database
     {
         if (!empty($data) && is_array($data)) {
             $keys = '';
-            $values = '';
-            $i = 0;
+            $values = ''; 
+            
             $keys = implode(',', array_keys($data));
             $values = ":" . implode(', :', array_keys($data));
             $sql = "INSERT INTO " . $table . " (" . $keys . ") VALUES ( " . $values . ")";
@@ -169,18 +169,18 @@ class Database
     // $query->execute();
     public function delete($table, $data)
     {
-        $whereCond = ''; 
+        $whereCond = '';
         if (!empty($data) && is_array($data)) {
             $whereCond .= " WHERE ";
             $i = 0;
             foreach ($data as $key => $val) {
                 $add = ($i > 0) ? ' AND ' : '';
-                  $whereCond .= "$add" . "$key=:$key";
+                $whereCond .= "$add" . "$key=:$key";
                 //$whereCond .= $add.$key." = '".$val."'";
                 $i++;
             }
         }
-        $sql = "DELETE FROM ".$table.$whereCond;  
+        $sql = "DELETE FROM " . $table . $whereCond;
         // $delete = $this->pdo->exec($sql);
         // return $delete?true:false;
 
@@ -189,7 +189,7 @@ class Database
             $query->bindValue(":$key", $val);
         }
         $delete = $query->execute();
-        return $delete?true:false;
+        return $delete ? true : false;
 
     }
 
