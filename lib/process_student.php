@@ -24,17 +24,16 @@ if (isset($_REQUEST['action']) && !empty($_REQUEST['action'])) {
         header('Location: ' . $home_url);
     } elseif ($_REQUEST['action'] == 'edit') {
         $id = $_POST['id'];
-
         if (!empty($id)) {
             $studentData = array(
-                'name'  => $_POST['name'],
+                'name' => $_POST['name'],
                 'email' => $_POST['email'],
                 'phone' => $_POST['phone'],
             );
-            $table     = "tbl_student";
+            $table = "tbl_student";
             $condition = array('id' => $id);
-            $update    = $db->update($table, $studentData, $condition);
-            if($update) {
+            $update = $db->update($table, $studentData, $condition);
+            if ($update) {
                 $msg = "Data Updated Successfully.";
             } else {
                 $msg = "Data not Updated.";
@@ -43,8 +42,23 @@ if (isset($_REQUEST['action']) && !empty($_REQUEST['action'])) {
             $home_url = '../index.php';
             header('Location: ' . $home_url);
         }
- 
+    } elseif ($_REQUEST['action'] == 'delete') {
+        $id = $_GET['id'];
+        if (!empty($id)) {
+            $table = "tbl_student";
+            $condition = array('id' => $id);
+            $delete = $db->delete($table, $condition);
+            if ($delete) { 
+                $msg = "Data Deleted Successfully.";
+            } else {
+                $msg = "Data not Deleted.";
+            }
+            Session::set('msg', $msg);
+            $home_url = '../index.php';
+            header('Location: ' . $home_url);
+        }
     }
+    
 }
 
 ?>

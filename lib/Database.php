@@ -54,7 +54,7 @@ class Database
             $sql .= ' LIMIT ' . $data['limit'];
         }
         // Double Where
-        $query = $this->pdo->prepare(($sql));
+        $query = $this->pdo->prepare($sql);
         if (array_key_exists("where", $data)) {
             foreach ($data['where'] as $key => $value) {
                 $query->bindValue(":$key", $value);
@@ -99,7 +99,7 @@ class Database
             $keys = implode(',', array_keys($data));
             $values = ":" . implode(', :', array_keys($data));
             $sql = "INSERT INTO " . $table . " (" . $keys . ") VALUES ( " . $values . ")";
-            $query = $this->pdo->prepare(($sql));
+            $query = $this->pdo->prepare($sql);
 
             foreach ($data as $key => $val) {
                 $query->bindValue(":$key", $val);
@@ -130,7 +130,6 @@ class Database
             $whereCond = '';
             $i = 0;
 
-
             foreach ($data as $key => $val) {
                 $add = ($i > 0) ? ' , ' : '';
                 $keysvalue .= "$add" . "$key=:$key";
@@ -149,7 +148,7 @@ class Database
 
             $sql = "UPDATE " . $table . " SET " . $keysvalue . $whereCond;
 
-            $query = $this->pdo->prepare(($sql));
+            $query = $this->pdo->prepare($sql);
             foreach ($data as $key => $val) {
                 $query->bindValue(":$key", $val);
             }
@@ -158,17 +157,38 @@ class Database
             }
             $update = $query->execute();
             return $update ? $query->rowCount() : false;
-        }else{
+        } else {
             return false;
         }
     }
 
     // Delete Data
-    public function delete()
+    // $sql = "DELETE FROM tableName WHERE id=:id;"; 
+    // $query = $this->pdo->prepare($sql); 
+    // $query->bindValue(':id', $id);
+    // $query->execute();
+    public function delete($table, $data)
     {
+        $whereCond = ''; 
+        if (!empty($data) && is_array($data)) {
+            $whereCond .= " WHERE ";
+            $i = 0;
+            foreach ($data as $key => $val) {
+                $add = ($i > 0) ? ' AND ' : '';
+                $whereCond .= "$add" . "$key=:$key";
+                $i++;
+            }
+        }
+        $sql = "DELETE FROM ".$table.$whereCond;  
+        $query = $this->pdo->prepare($sql);
+
+        foreach ($data as $key => $val) {
+            $query->bindValue(":$key", $val);
+        }
+        $delete = $query->execute();
+        return $delete?true:false;
 
     }
-
 
 }
 ?>
