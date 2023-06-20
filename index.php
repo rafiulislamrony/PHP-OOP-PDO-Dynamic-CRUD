@@ -37,10 +37,13 @@ include 'lib/Database.php';
             $table = "tbl_student";
             $order_by = array('order_by'=> 'id DESC'); 
             // $selectcond = array('select'=> 'name'); 
-            $wherecond = array(
-                'where'=>array('id'=> '2', 'email'=>'afiulislam@gmail.com'),
-                'return_type'=>'single',
-            );
+            // $wherecond = array(
+            //     'where'=>array('id'=> '2', 'email'=>'afiulislam@gmail.com'),
+            //     'return_type'=>'single',
+            // );
+            // $limit = array('start'=>'3', 'limit' =>'4');
+            // $limit = array('limit' =>'4');
+
             $data = $db->select($table, $wherecond);
 
 

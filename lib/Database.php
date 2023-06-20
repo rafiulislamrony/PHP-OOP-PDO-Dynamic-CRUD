@@ -27,24 +27,41 @@ class Database
     // $sql->bindValue(':email', $email);
     // $sql->execute();
 
-    public function select($table, $data=array())
+    public function select($table, $data = array())
     {
         $sql = 'SELECT ';
-        $sql .= array_key_exists("select", $data)?$data['select']:'*';
-        $sql .= ' FROM '.$table;
-       
-        if(array_key_exists("where", $data)){
+        $sql .= array_key_exists("select", $data) ? $data['select'] : '*';
+        $sql .= ' FROM ' . $table;
+        // For Where 
+        if (array_key_exists("where", $data)) {
             $sql .= ' WHERE ';
             $i = 0;
-            
-            foreach($data['where'] as $key => $value){
-                $add = ($i>0)?' And ':'';
-                $sql .= "$add"."$key=:$key";
+            foreach ($data['where'] as $key => $value) {
+                $add = ($i > 0) ? ' And ' : '';
+                $sql .= "$add" . "$key=:$key";
                 $i++;
             }
-
-
         }
+        // For Order By
+        if (array_key_exists("order_by", $data)) {
+            $sql .= ' ORDER BY ' . $data['order_by'];
+        }
+        // For Limit
+        if (array_key_exists("start", $data) && array_key_exists("limit", $data)) {
+            $sql .= ' LIMIT ' . $data['start'] . ',' . $data['limit'];
+        } elseif (!array_key_exists("start", $data) && array_key_exists("limit", $data)) {
+            $sql .= ' LIMIT ' . $data['limit'];
+        }
+
+        // Double Where
+        $query = $this->pdo->prepare(($sql));
+        if (array_key_exists("where", $data)) {
+            foreach ($data['where'] as $key => $value) {
+                $query->bindValue(':key', $value);
+            }
+        }
+        $query->execute();
+ 
     }
     // Insert Data
     public function insert()
