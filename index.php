@@ -8,7 +8,7 @@ include 'lib/Database.php';
 <div class="panel-heading">
     <h2>Student Data
 
-        <a class="btn btn-success" href="addstudent.php">Add Student Data</a>
+        <a class="btn btn-success" href="addstudent.php">Add Student</a>
     </h2>
 </div>
 

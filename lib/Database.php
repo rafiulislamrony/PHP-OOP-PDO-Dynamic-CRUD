@@ -20,12 +20,13 @@ class Database
             }
         }
     }
-    // Read Data
 
-    // $sql = $this->pdo->prepare("SELECT * FROM tableName WHERE id=:id AND email=:email LIMIT 5,2");
-    // $sql->bindValue(':id', $id);
-    // $sql->bindValue(':email', $email);
-    // $sql->execute();
+    // Read Data
+    // $sql = "SELECT * FROM tableName WHERE id=:id AND email=:email LIMIT 5";
+    // $query = $this->pdo->prepare($sql);
+    // $query->bindValue(':id', $id);
+    // $query->bindValue(':email', $email);
+    // $query->execute();
 
     public function select($table, $data = array())
     {
