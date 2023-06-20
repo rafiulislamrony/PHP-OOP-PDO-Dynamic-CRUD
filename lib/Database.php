@@ -53,18 +53,14 @@ class Database
         } elseif (!array_key_exists("start", $data) && array_key_exists("limit", $data)) {
             $sql .= ' LIMIT ' . $data['limit'];
         }
-
         // Double Where
         $query = $this->pdo->prepare(($sql));
-
         if (array_key_exists("where", $data)) {
             foreach ($data['where'] as $key => $value) {
                 $query->bindValue(":$key", $value);
             }
         }
-
         $query->execute();
-
         if (array_key_exists("return_type", $data)) {
             switch ($data['return_type']) {
                 case 'count':
@@ -116,12 +112,41 @@ class Database
             } else {
                 return false;
             }
-        } 
+        }
     }
     // Update Data
-    public function update()
-    {
+    // $sql = "UPDATE tableName SET name=:name, email=:email, phone=:phone WHERE id=?id;"; 
+    // $query = $this->pdo->prepare($sql);
+    // $query->bindValue(':name', $name);
+    // $query->bindValue(':email', $email);
+    // $query->bindValue(':phone', $phone);
+    // $query->bindValue(':id', $id);
+    // $query->execute();
 
+    public function($table, $data, $condition)
+    {
+        if (!empty($data) && is_array($data)) {
+            $keysvalue   = '';
+            $whereCond = '';
+            $i = 0; 
+        }
+
+        foreach ($data as $key => $val) {
+            $add = ($i > 0) ? ' , ' : '';
+            $keysvalue .= "$add" . "$key=:$key";
+            $i++;
+        } 
+
+        if(!empty($condition) && is_array($condition)){
+            $whereCond .= " WHERE ";
+            $i = 0;
+            foreach ($condition as $key => $val) {
+                $add = ($i > 0) ? ' AND ' : '';
+                $whereCond .= "$add" . "$key=:$key";
+                $i++;
+            }
+        }
+ 
     }
 
     // Delete Data

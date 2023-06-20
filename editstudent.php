@@ -35,7 +35,7 @@ include 'lib/Database.php'; ?>
             <br>
             <div class="form-group">
                 <label for="number">Phone Number</label>
-                <input type="text" name="number" value="<?php echo $value['phone']; ?>" id="number" class="form-control" required="">
+                <input type="text" name="phone" value="<?php echo $value['phone']; ?>" id="number" class="form-control" required="">
             </div>
             <br>
             <div class="form-group">
