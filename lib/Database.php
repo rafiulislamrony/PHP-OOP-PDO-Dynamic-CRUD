@@ -55,13 +55,35 @@ class Database
 
         // Double Where
         $query = $this->pdo->prepare(($sql));
+
         if (array_key_exists("where", $data)) {
             foreach ($data['where'] as $key => $value) {
-                $query->bindValue(':key', $value);
+                $query->bindValue(":$key", $value);
             }
         }
+
         $query->execute();
- 
+
+        if (array_key_exists("return_type", $data)) {
+            switch ($data['return_type']) {
+                case 'count':
+                    $value = $query->rowCount();
+                    break;
+                case 'single':
+                    $value = $query->fetch(PDO::FETCH_ASSOC);
+                    break;
+
+                default:
+                $value= '';
+                    break;
+            }
+        }else{
+            if($query->rowCount() > 0){
+                $value = $query->fetchAll();
+            }
+        }
+        return !empty($value)?$value:false;
+
     }
     // Insert Data
     public function insert()

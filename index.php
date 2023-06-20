@@ -31,43 +31,54 @@ include 'lib/Database.php';
                 <th>Action</th>
             </tr>
             <?php
- 
+
             $db = new Database();
 
             $table = "tbl_student";
-            $order_by = array('order_by'=> 'id DESC'); 
+            $order_by = array('order_by' => 'id DESC');
+
             // $selectcond = array('select'=> 'name'); 
             // $wherecond = array(
-            //     'where'=>array('id'=> '2', 'email'=>'afiulislam@gmail.com'),
+            //     'where'=>array('id' => '2', 'email'=>'rafiulerwislam@gmail.com'),
             //     'return_type'=>'single',
             // );
-            // $limit = array('start'=>'3', 'limit' =>'4');
+            // $limit = array('start'=>'2', 'limit' =>'2');
             // $limit = array('limit' =>'4');
+            
+            $studentData = $db->select($table, $order_by);
 
-            $data = $db->select($table, $wherecond);
-
-
-
+            if (!empty($studentData)) {
+                $i = 0;
+                 foreach ($studentData as $data) { $i++
+                 ?> 
+                    <tr>
+                        <td>
+                             <?php echo $i; ?>  
+                        </td>
+                        <td>
+                        <?php echo $data['name']; ?>
+                        </td>
+                        <td>
+                        <?php echo $data['email']; ?>
+                        </td>
+                        <td>
+                        <?php echo $data['phone']; ?>
+                        </td>
+                        <td>
+                            <a class="btn btn-primary" href="editstudent.php?id=<?php echo $data['id']; ?>">Edit</a>
+                            <a class="btn btn-danger" href="lib/process_student.php?action=delete&id=<?php echo $data['id']; ?>"
+                                onclick="return confirm('Are you sure to delete this Data?')">Delete</a> 
+                        </td>
+                    </tr>
+                <?php }
+            } else { ?>
+                <tr>
+                    <td colspan="5"> 
+                       <h2>No Student Data Found.....</h2>
+                    </td>
+                </tr>
+            <?php }
             ?>
-            <tr>
-                <td>
-                    1
-                </td>
-                <td>
-                    Rafi
-                </td>
-                <td>
-                    rafi@gmail.com
-                </td>
-                <td>
-                    01921756501
-                </td>
-                <td>
-                    <a class="btn btn-primary" href="editstudent.php?id=1">Edit</a>
-                    <a class="btn btn-danger" href="lib/process_student.php?action=delete&id=1"
-                        onclick="return confirm('Are you sure to delete this Data?')">Delete</a>
-                </td>
-            </tr>
 
             <tr>
                 <td colspan="5">
