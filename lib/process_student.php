@@ -1,5 +1,4 @@
-<?php
-
+<?php 
 include 'Database.php';
 include 'Session.php';
 Session::init();

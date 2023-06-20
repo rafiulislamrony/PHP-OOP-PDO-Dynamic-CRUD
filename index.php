@@ -1,13 +1,21 @@
-<?php include 'inc/header.php'; ?>
-
 <?php
+include 'lib/Session.php';
+include 'inc/header.php';
 include 'lib/Database.php';
-
 ?>
 
+<?php
+Session::init();
+$msg = Session::get('msg');
+if(!empty($msg)){
+    echo '<h4 class="alert alert-info text-center">'.$msg.'</h4>';
+   Session::unset(); 
+}
+?> 
+
+<div class="panel panel-default"> 
 <div class="panel-heading">
     <h2>Student Data
-
         <a class="btn btn-success" href="addstudent.php">Add Student</a>
     </h2>
 </div>
@@ -49,32 +57,33 @@ include 'lib/Database.php';
 
             if (!empty($studentData)) {
                 $i = 0;
-                 foreach ($studentData as $data) { $i++
-                 ?> 
+                foreach ($studentData as $data) {
+                    $i++
+                        ?>
                     <tr>
                         <td>
-                             <?php echo $i; ?>  
+                            <?php echo $i; ?>
                         </td>
                         <td>
-                        <?php echo $data['name']; ?>
+                            <?php echo $data['name']; ?>
                         </td>
                         <td>
-                        <?php echo $data['email']; ?>
+                            <?php echo $data['email']; ?>
                         </td>
                         <td>
-                        <?php echo $data['phone']; ?>
+                            <?php echo $data['phone']; ?>
                         </td>
                         <td>
                             <a class="btn btn-primary" href="editstudent.php?id=<?php echo $data['id']; ?>">Edit</a>
                             <a class="btn btn-danger" href="lib/process_student.php?action=delete&id=<?php echo $data['id']; ?>"
-                                onclick="return confirm('Are you sure to delete this Data?')">Delete</a> 
+                                onclick="return confirm('Are you sure to delete this Data?')">Delete</a>
                         </td>
                     </tr>
                 <?php }
             } else { ?>
                 <tr>
-                    <td colspan="5"> 
-                       <h2>No Student Data Found.....</h2>
+                    <td colspan="5">
+                        <h2>No Student Data Found.....</h2>
                     </td>
                 </tr>
             <?php }

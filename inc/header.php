@@ -17,4 +17,4 @@
             <h2>PHP OOP & PDO Dynamic CRUD</h2>
         </div>
         <br>
-        <div class="panel panel-default">
+  
