@@ -22,6 +22,8 @@ if(isset($_REQUEST['action']) && !empty($_REQUEST['action'])){
         Session::set('msg', $msg);
         $home_url = '../index.php';
         header('Location: '. $home_url);
+    }elseif($_REQUEST['action']== 'edit'){
+
     }
 }
 
