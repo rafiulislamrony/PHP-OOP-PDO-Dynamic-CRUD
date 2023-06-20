@@ -175,13 +175,16 @@ class Database
             $i = 0;
             foreach ($data as $key => $val) {
                 $add = ($i > 0) ? ' AND ' : '';
-                $whereCond .= "$add" . "$key=:$key";
+                  $whereCond .= "$add" . "$key=:$key";
+                //$whereCond .= $add.$key." = '".$val."'";
                 $i++;
             }
         }
         $sql = "DELETE FROM ".$table.$whereCond;  
-        $query = $this->pdo->prepare($sql);
+        // $delete = $this->pdo->exec($sql);
+        // return $delete?true:false;
 
+        $query = $this->pdo->prepare($sql);
         foreach ($data as $key => $val) {
             $query->bindValue(":$key", $val);
         }
