@@ -115,7 +115,7 @@ class Database
         }
     }
     // Update Data
-    // $sql = "UPDATE tableName SET name=:name, email=:email, phone=:phone WHERE id=?id;"; 
+    // $sql = "UPDATE tableName SET name=:name, email=:email, phone=:phone WHERE id=:id;"; 
     // $query = $this->pdo->prepare($sql);
     // $query->bindValue(':name', $name);
     // $query->bindValue(':email', $email);
@@ -123,30 +123,44 @@ class Database
     // $query->bindValue(':id', $id);
     // $query->execute();
 
-    public function($table, $data, $condition)
+    public function update($table, $data, $condition)
     {
         if (!empty($data) && is_array($data)) {
-            $keysvalue   = '';
+            $keysvalue = '';
             $whereCond = '';
-            $i = 0; 
-        }
-
-        foreach ($data as $key => $val) {
-            $add = ($i > 0) ? ' , ' : '';
-            $keysvalue .= "$add" . "$key=:$key";
-            $i++;
-        } 
-
-        if(!empty($condition) && is_array($condition)){
-            $whereCond .= " WHERE ";
             $i = 0;
-            foreach ($condition as $key => $val) {
-                $add = ($i > 0) ? ' AND ' : '';
-                $whereCond .= "$add" . "$key=:$key";
+
+
+            foreach ($data as $key => $val) {
+                $add = ($i > 0) ? ' , ' : '';
+                $keysvalue .= "$add" . "$key=:$key";
                 $i++;
             }
+
+            if (!empty($condition) && is_array($condition)) {
+                $whereCond .= " WHERE ";
+                $i = 0;
+                foreach ($condition as $key => $val) {
+                    $add = ($i > 0) ? ' AND ' : '';
+                    $whereCond .= "$add" . "$key=:$key";
+                    $i++;
+                }
+            }
+
+            $sql = "UPDATE " . $table . " SET " . $keysvalue . $whereCond;
+
+            $query = $this->pdo->prepare(($sql));
+            foreach ($data as $key => $val) {
+                $query->bindValue(":$key", $val);
+            }
+            foreach ($condition as $key => $val) {
+                $query->bindValue(":$key", $val);
+            }
+            $update = $query->execute();
+            return $update ? $query->rowCount() : false;
+        }else{
+            return false;
         }
- 
     }
 
     // Delete Data

@@ -34,7 +34,7 @@ if (isset($_REQUEST['action']) && !empty($_REQUEST['action'])) {
             $table     = "tbl_student";
             $condition = array('id' => $id);
             $update    = $db->update($table, $studentData, $condition);
-            if ($update) {
+            if($update) {
                 $msg = "Data Updated Successfully.";
             } else {
                 $msg = "Data not Updated.";
